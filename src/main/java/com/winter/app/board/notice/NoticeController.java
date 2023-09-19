@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.winter.app.board.BoardService;
 import com.winter.app.board.BoardVO;
 import com.winter.app.commons.Pager;
 
@@ -24,11 +27,32 @@ public class NoticeController {
 	//ModelAndView , void, String
 	@GetMapping("list")
 	public String getList(Pager pager, Model model) throws Exception{
-//		List<BoardVO> ar = noticeService.getList(pager);
-//		model.addAttribute("list", ar);
+		List<BoardVO> ar = noticeService.getList(pager);
+		model.addAttribute("list", ar);
 		//error, warn(경고 에러발생할 것 같을 때), info, debug, trace
 		log.error("getList 실행");
 		return "board/list";
+	}
+	
+	@GetMapping("add")
+	public String add() throws Exception{
+		return "board/add";
+	}
+	
+	@PostMapping("add")
+	public String add(NoticeVO noticeVO)throws Exception{
+		//log.info("NoticeVO : {}", noticeVO);
+		
+		int result = noticeService.add(noticeVO);
+		return "redirect:./list";
+	}
+	
+	@GetMapping("detail")
+	public String getDetail(BoardVO boardVO, Model model)throws Exception{
+		boardVO= noticeService.getDetail(boardVO);
+		model.addAttribute("vo",boardVO);
+		
+		return "board/detail";
 	}
 	
 }

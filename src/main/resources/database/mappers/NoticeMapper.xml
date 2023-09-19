@@ -7,9 +7,9 @@
 	
 	<sql id="forPager">
 		<choose>
-			<when test="kind=='1'">boardTitle</when>
-			<when test="kind=='2'">boardContents</when>
-			<otherwise>boardWriter</otherwise> <!-- 아무것도 안하면 writer에서 검색됨 -->
+			<when test="kind=='1'">BOARDTITLE</when>
+			<when test="kind=='2'">BOARDCONTENTS</when>
+			<otherwise>BOARDWRITER</otherwise> <!-- 아무것도 안하면 writer에서 검색됨 -->
 		</choose>		
 	</sql>
 
@@ -24,9 +24,9 @@
 		SELECT * FROM NOTICE
 		WHERE 
 			<include refid="forPager"></include> 
-			LIKE CONCAT('%',#{search},'%') <!-- mysql 사용 -->
+			LIKE CONCAT('%',#{search},'%')
 		ORDER BY BOARDNO DESC
-		LIMIT #{startRow},#{lastRow};
+		LIMIT #{startRow},#{lastRow}
 	</select>
 	
 	<insert id="add" parameterType="BoardVO">
@@ -35,7 +35,7 @@
 	</insert>
 
 	<!-- Detail -->
-	<select id="getDetail">
+	<select id="getDetail" resultType="BoardVO">
 		SELECT * FROM NOTICE 
 		WHERE BOARDNO=#{boardNo}
 	</select>
