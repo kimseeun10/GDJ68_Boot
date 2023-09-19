@@ -29,6 +29,7 @@ public class NoticeController {
 	public String getList(Pager pager, Model model) throws Exception{
 		List<BoardVO> ar = noticeService.getList(pager);
 		model.addAttribute("list", ar);
+		model.addAttribute("pager", pager);
 		//error, warn(경고 에러발생할 것 같을 때), info, debug, trace
 		log.error("getList 실행");
 		return "board/list";
@@ -50,9 +51,30 @@ public class NoticeController {
 	@GetMapping("detail")
 	public String getDetail(BoardVO boardVO, Model model)throws Exception{
 		boardVO= noticeService.getDetail(boardVO);
+		noticeService.setHitUpdate(boardVO);
 		model.addAttribute("vo",boardVO);
 		
 		return "board/detail";
 	}
 	
+	@GetMapping("update")
+	public String setUpdate(BoardVO boardVO, Model model) throws Exception{
+		boardVO = noticeService.getDetail(boardVO);
+		model.addAttribute("vo", boardVO);
+		return "board/update";
+	}
+	
+	@PostMapping("update")
+	public String setUpdate(BoardVO boardVO) throws Exception{
+		int result = noticeService.setUpdate(boardVO);
+		
+//		return "redirect:./detail?boardNo="+boardVO.getBoardNo();
+		return "redirect:./list";
+	}
+	
+	@GetMapping("delete")
+	public String setDelete(BoardVO boardVO) throws Exception{
+		int result = noticeService.setDelete(boardVO);
+		return "redirect:./list";
+	}
 }

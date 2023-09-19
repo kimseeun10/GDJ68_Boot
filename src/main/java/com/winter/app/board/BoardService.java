@@ -14,6 +14,8 @@ public interface BoardService {
 	
 	public int setUpdate(BoardVO boardVO)throws Exception;
 	
+	public int setHitUpdate(BoardVO boardVO)throws Exception;
+	
 	public int setDelete(BoardVO boardVO)throws Exception;
 	
 }

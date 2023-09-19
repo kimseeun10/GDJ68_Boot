@@ -18,6 +18,8 @@ public class NoticeService implements BoardService{
 	@Override
 	public List<BoardVO> getList(Pager pager) throws Exception {
 		// TODO Auto-generated method stub
+//		pager.makeRowNum();
+//		pager.makePageNum(noticeDAO.getCount(pager));
 		return noticeDAO.getList(pager);
 	}
 
@@ -43,6 +45,12 @@ public class NoticeService implements BoardService{
 	public int setDelete(BoardVO boardVO) throws Exception {
 		// TODO Auto-generated method stub
 		return noticeDAO.setDelete(boardVO);
+	}
+
+	@Override
+	public int setHitUpdate(BoardVO boardVO) throws Exception {
+		// TODO Auto-generated method stub
+		return noticeDAO.setUpdate(boardVO);
 	}
 
 	

@@ -52,9 +52,9 @@
 	
 	
 	<!-- Hit Update -->
-	<update id="setHitUpdate">
+	<update id="setHitUpdate" parameterType="BoardVO">
 		UPDATE NOTICE SET
-		BOARDHIT = BOARDHIT + 1
+		BOARDHIT = #{boardHit} + 1
 		WHERE BOARDNO = #{boardNo}
 	</update>
 	
