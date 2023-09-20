@@ -21,7 +21,25 @@
         		
         		<div class="container-fluid">
         		<!-- page 실제 내용 -->
-        		
+        		<h1>Update Page</h1>
+        		 <div class="row">
+        			<form action="update" method="post">
+        			<input type="hidden" name="boardNo" value="${vo.boardNo}">
+        				  <div class="mb-3">
+						    <label for="boardTitle" class="form-label">Title</label>
+						    <input type="text" class="form-control" name="boardTitle" id="boardTitle" value="${vo.boardTitle}">
+						  </div>
+        				  <div class="mb-3">
+						    <label for="boardWriter" class="form-label">Writer</label>
+						    <input type="text" class="form-control" name="boardWriter" id="boardWriter" value="${vo.boardWriter}">
+						  </div>
+						 <div class="mb-3">
+						    <label for="boardContents" class="form-label">Contents</label>
+						    <textarea class="form-control" name="boardContents" id="boardContents">${vo.boardContents}</textarea>
+						  </div>
+						  <button class="btn btn-secondary">수정완료</button>
+        			</form>
+        		</div>
         		</div>
         		
         	</div>
