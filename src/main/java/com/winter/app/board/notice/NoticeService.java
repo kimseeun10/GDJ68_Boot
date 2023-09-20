@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardService;
 import com.winter.app.board.BoardVO;
+import com.winter.app.board.FileVO;
 import com.winter.app.commons.FileManager;
 import com.winter.app.commons.Pager;
 
@@ -56,7 +57,7 @@ public class NoticeService implements BoardService{
 			
 			NoticeFileVO fileVO = new NoticeFileVO();
 			String fileName = fileManager.save(this.uploadPath+this.boardName, multipartFile);
-			fileVO.setBoardNo(boardVO.getBoardNo( ));
+			fileVO.setBoardNo(boardVO.getBoardNo());
 			fileVO.setFileName(fileName);
 			fileVO.setOriName(multipartFile.getOriginalFilename());
 			result = noticeDAO.fileAdd(fileVO);
@@ -69,6 +70,13 @@ public class NoticeService implements BoardService{
 	public BoardVO getDetail(BoardVO boardVO) throws Exception {
 		// TODO Auto-generated method stub
 		return noticeDAO.getDetail(boardVO);
+	}
+
+	
+	@Override
+	public FileVO getFileDetail(FileVO fileVO) throws Exception {
+		// TODO Auto-generated method stub
+		return noticeDAO.getFileDetail(fileVO);
 	}
 
 	@Override

@@ -39,13 +39,16 @@
 		VALUES (null , #{boardNo}, #{fileName}, #{oriName})	
 	</insert>
 
-
 	<!-- Detail -->
 	<select id="getDetail" parameterType="BoardVO" resultMap="getDetailResult">
 		SELECT N.*, NF.* 
 		FROM NOTICE N LEFT OUTER JOIN NOTICEFILES NF
 		ON N.BOARDNO = NF.BOARDNO 
 		WHERE N.BOARDNO=#{boardNo}
+	</select>
+
+	<select id="getFileDetail" parameterType="FileVO" resultType="NoticeFileVo">
+		SELECT * FROM NOTICEFILES WHERE FILENO=#{fileNo}
 	</select>
 
 	<resultMap type="NoticeVO" id="getDetailResult">
@@ -59,9 +62,9 @@
 			<id column="FILENO" property="fileNo"/>
 			<result column="FILENAME" property="fileName"/>
 			<result column="ORINAME" property="oriName"/>
-		</collection>	
-		
+		</collection>			
 	</resultMap>
+	
 	<!-- Update -->
 	<update id="setUpdate" parameterType="BoardVO"> 
 		UPDATE NOTICE SET 

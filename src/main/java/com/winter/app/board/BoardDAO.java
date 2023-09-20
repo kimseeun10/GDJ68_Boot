@@ -16,6 +16,8 @@ public interface BoardDAO {
 	
 	public BoardVO getDetail(BoardVO boardVO)throws Exception;
 	
+	public FileVO getFileDetail(FileVO fileVO) throws Exception;
+	
 	public int setUpdate(BoardVO boardVO)throws Exception;
 	
 	public int setHitUpdate(BoardVO boardVO)throws Exception;
