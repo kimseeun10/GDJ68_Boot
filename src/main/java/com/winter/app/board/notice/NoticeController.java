@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.winter.app.board.BoardService;
@@ -23,6 +26,11 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService noticeService;
+	
+	@ModelAttribute("board")
+	public String getBoard() {
+		return "notice";
+	}
 	
 	//ModelAndView , void, String
 	@GetMapping("list")
@@ -41,21 +49,28 @@ public class NoticeController {
 	}
 	
 	@PostMapping("add")
-	public String add(NoticeVO noticeVO)throws Exception{
-		//log.info("NoticeVO : {}", noticeVO);
+	public String add(NoticeVO noticeVO, MultipartFile [] files)throws Exception{
+		log.info("files : {}", files);
 		
-		int result = noticeService.add(noticeVO);
+		int result = noticeService.add(noticeVO, files);
 		return "redirect:./list";
 	}
 	
 	@GetMapping("detail")
 	public String getDetail(BoardVO boardVO, Model model)throws Exception{
 		boardVO= noticeService.getDetail(boardVO);
-		noticeService.setHitUpdate(boardVO);
 		model.addAttribute("vo",boardVO);
 		
 		return "board/detail";
 	}
+	
+	//json 사용
+	
+//	@GetMapping("detail2")
+//	@ResponseBody
+//	public BoardVO getDetail(NoticeVO noticeVO)throws Exception{
+//		return noticeService.getDetail(noticeVO);
+//	}
 	
 	@GetMapping("update")
 	public String setUpdate(BoardVO boardVO, Model model) throws Exception{
