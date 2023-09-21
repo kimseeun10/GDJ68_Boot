@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -24,8 +24,26 @@
                     </form>
 
                     <!-- Topbar Navbar -->
+                    <c:if test="${empty member}">
                     <ul class="navbar-nav ml-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="/member/join" role="button" aria-expanded="false">
+                                 <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/member/login" role="button" aria-expanded="false">
+                                 <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            
+                        </li>
+                    </ul>
+                    </c:if>
+                    
+                    <c:if test="${not empty member}">
+                    <ul class="navbar-nav ml-auto">
+						
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
@@ -201,6 +219,6 @@
                         </li>
 
                     </ul>
-
+                    </c:if>
                 </nav>
                 <!-- End of Topbar -->
