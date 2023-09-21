@@ -17,24 +17,24 @@ class NoticeDAOTest {
 	private NoticeDAO noticeDAO;
 	
 //	@Test
-//	void addTest()throws Exception{
-//		for(int i=0; i<100; i++) {			
-//			BoardVO boardVO = new BoardVO();
-//			boardVO.setBoardTitle("title"+i);
-//			boardVO.setBoardWriter("writer"+i);
-//			boardVO.setBoardContents("contents"+1);
-//			
-//			int result = noticeDAO.add(boardVO);
-//
-//			if(i%10 == 0) {	
-//				Thread.sleep(500);
-//			}
-//			
-//		}
-//		
-//		System.out.println("Finish");
-//		
-//	}
+	void addTest()throws Exception{
+		for(int i=0; i<100; i++) {			
+			BoardVO boardVO = new BoardVO();
+			boardVO.setBoardTitle("title"+i);
+			boardVO.setBoardWriter("writer"+i);
+			boardVO.setBoardContents("contents"+1);
+			
+			int result = noticeDAO.add(boardVO);
+
+			if(i%10 == 0) {	
+				Thread.sleep(500);
+			}
+			
+		}
+		
+		System.out.println("Finish");
+		
+	}
 
 //	@Test
 //	void getCountTest()throws Exception{
