@@ -1,0 +1,4 @@
+com\winter\app\Gdj68BootApplicationTests.class
+com\winter\app\board\notice\NoticeDAOTest.class
+com\winter\app\db\DBConnectionTest.class
+com\winter\app\aop\TransferTest.class

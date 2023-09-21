@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.winter.app.board.notice.NoticeDAO">
+	
+	<sql id="forPager">
+		<choose>
+			<when test="kind=='1'">BOARDTITLE</when>
+			<when test="kind=='2'">BOARDCONTENTS</when>
+			<otherwise>BOARDWRITER</otherwise> <!-- 아무것도 안하면 writer에서 검색됨 -->
+		</choose>		
+	</sql>
+
+	<select id="getCount" parameterType="Pager" resultType="Long">
+		<bind name="pattern" value="'%'+_parameter.getSearch()+'%'"/> <!-- mybatis 이용한 쿼리 -->
+		SELECT COUNT(BOARDNO) FROM QNA
+		WHERE <include refid="forPager"></include>
+		LIKE #{pattern}
+	</select>
+
+	<select id="getList" parameterType="Pager" resultType="QnaVO">
+		SELECT * FROM QNA
+		WHERE 
+			<include refid="forPager"></include> 
+			LIKE CONCAT('%',#{search},'%')
+		ORDER BY BOARDNO DESC
+		LIMIT #{startRow},#{lastRow}
+	</select>
+	
+	<insert id="add" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="boardNo">
+		INSERT INTO QNA
+		VALUES (null, #{boardTitle}, #{boardWriter}, #{boardContents}, now(), 0, 0, 0, 0)
+	</insert>
+
+	<insert id="fileAdd" parameterType="QnaFileVO">
+		INSERT INTO QNAFILES 
+		VALUES (null , #{boardNo}, #{fileName}, #{oriName})	
+	</insert>
+
+	<!-- Detail -->
+	<select id="getDetail" parameterType="BoardVO" resultMap="getDetailResult">
+		SELECT Q.*, QF.* 
+		FROM QNA Q LEFT OUTER JOIN QNAFILES QF
+		ON N.BOARDNO = NF.BOARDNO 
+		WHERE Q.BOARDNO=#{boardNo}
+	</select>
+
+	<select id="getFileDetail" parameterType="FileVO" resultType="QnaFileVO">
+		SELECT * FROM QNAFILES WHERE FILENO=#{fileNo}
+	</select>
+
+	<resultMap type="QnaVO" id="getDetailResult">
+		<id column="BOARDNO" property="boardNo"/>
+		<result column="BOARDTITLE" property="boardTitle"/>
+		<result column="BOARDWRITER" property="boardWriter"/>
+		<result column="BOARDCONTENTS" property="boardContents"/>
+		<result column="BOARDDATE" property="boardDate"/>
+		<result column="BOARDHIT" property="boardHit"/>
+		<collection property="list" javaType="java.util.List" ofType="QnaFileVO">
+			<id column="FILENO" property="fileNo"/>
+			<result column="FILENAME" property="fileName"/>
+			<result column="ORINAME" property="oriName"/>
+		</collection>			
+	</resultMap>
+	
+	<!-- Update -->
+	<update id="setUpdate" parameterType="BoardVO"> 
+		UPDATE QNA SET 
+		BOARDTITLE = #{boardTitle},
+		BOARDWRITER = #{boardWriter},
+		BOARDCONTENTS = #{boardContents},
+		BOARDDATE = NOW()
+		WHERE BOARDNO=#{boardNo}
+	</update>
+	
+	
+	<!-- Hit Update -->
+	<update id="setHitUpdate" parameterType="BoardVO">
+		UPDATE QNA SET
+		BOARDHIT = #{boardHit} + 1
+		WHERE BOARDNO = #{boardNo}
+	</update>
+	
+	<!-- Delete -->
+	<delete id="setDelete" parameterType="BoardVO">
+		DELETE FROM QNA
+		WHERE BOARDNO = #{boardNo}
+	</delete>	
+	
+</mapper>

@@ -25,37 +25,37 @@
 					
 		<div class="text-conter">
 		<table class="table">
-	
-		<thead>
-			<th scope="col">NO</th>
-			<th scope="col" >SUBJECT</th>
-			<th scope="col">NAME</th>
-			<th scope="col">DATE</th>
-		</thead>
-		<tbody class="table-group-divider">
-		<tr>
-			<td>${vo.boardNo}</td>
-			<td>${vo.boardTitle}</td>
-			<td>${vo.boardWriter}</td>
-			<td>${vo.boardDate}</td>
-		</tr>
-		<tr>
-			<td>
-			<div class = "d-none d-lg-block">
-			<textarea rows="10%" style="width:260%; border: 0;" readonly="readonly">${vo.boardContents}</textarea>
-			</div>
-			</td>
-		</tr>
 		
-		</tbody>
+		    <tr>
+		        <th>Title</th>
+		        <td>${vo.boardTitle}</td>
+		    </tr>
+		    <tr>
+		        <th>Write</th>
+		        <td>${vo.boardWriter}</td>
+		    </tr>
+		    <tr>
+		        <th>Date</th>
+		        <td>${vo.boardDate}</td>
+		    </tr>
+	 
 		</table>
-		</div>
-	
-        		<a class="btn btn-outline-secondary" href="./update?boardNo=${vo.boardNo}" style='width:80px; float: left; background-color: #f1f3f5; line-height: 30px; border: 0px;'>수정</a>
-				<button id="del" class="btn btn-danger c1" style='width:80px; height:40px; left; background-color: grey; line-height: 30px; border: 0px;'>삭제</button>     		
+		<div class="mb-3">
+			<label for="boardContents" class="form-label"></label>
+			<textarea class="form-control" name="boardContents" id="boardContents" readonly="readonly" style="height: 200px;">${vo.boardContents}</textarea>
+		 </div>
+			<c:forEach items="${vo.list}" var="f">
+			 	<img alt="" src="../files/${board}/${f.fileName}" style="width: 300px; height: 300px;"><!-- files 까지가 upload라는 폴더까지 -->
+				<br>
+				<a href="./fileDown?fileNo=${f.fileNo}">${f.oriName}</a>
+			</c:forEach>
+	</div>
+	<br><br>
+        		<a class="btn btn-outline-secondary" href="./update?boardNo=${vo.boardNo}">수정</a>
+				<a class="btn btn-danger" href="./delete?boardNo=${vo.boardNo}">삭제</a>    		
 			</div>
         		</div>
-			<c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
+				<c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
         	</div>
         </div>
 
