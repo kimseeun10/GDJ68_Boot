@@ -5,7 +5,7 @@
 
 <mapper namespace="com.winter.app.board.qna.QnaDAO">
 	<select id="getList" parameterType="Pager" resultType="QnaVO">
-		SELECT * FROM QNA
+		SELECT * FROM QNA ORDER BY BOARDNO DESC
 	</select>
 	
 	<insert id="add" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="boardNo">
@@ -13,8 +13,38 @@
 		VALUES (null, #{boardTitle}, #{boardWriter}, #{boardContents}, now(), 0, 0, 0, 0)
 	</insert>
 	
-	<select id="getDetail">
-		SELECT * FROM QNA WHERE BOARDNO=#{boardNo}
+	<insert id="fileAdd" parameterType="NoticeFileVO">
+		INSERT INTO QNAFILES 
+		VALUES (null , #{boardNo}, #{fileName}, #{oriName})	
+	</insert>
+	
+	<!-- Detail -->
+	<select id="getDetail" parameterType="BoardVO" resultMap="getDetailResult">
+		SELECT Q.*, QF.* 
+		FROM QNA Q LEFT OUTER JOIN QNAFILES QF
+		ON Q.BOARDNO = QF.BOARDNO 
+		WHERE Q.BOARDNO=#{boardNo}
 	</select>
+
+	<select id="getFileDetail" parameterType="FileVO" resultType="NoticeFileVo">
+		SELECT * FROM QNAFILES WHERE FILENO=#{fileNo}
+	</select>
+
+	<resultMap type="QnaVO" id="getDetailResult">
+		<id column="BOARDNO" property="boardNo"/>
+		<result column="BOARDTITLE" property="boardTitle"/>
+		<result column="BOARDWRITER" property="boardWriter"/>
+		<result column="BOARDCONTENTS" property="boardContents"/>
+		<result column="BOARDDATE" property="boardDate"/>
+		<result column="BOARDHIT" property="boardHit"/>
+		<result column="REF" property="ref"/>
+		<result column="STEP" property="step"/>
+		<result column="DEPTH" property="depth"/>
+		<collection property="list" javaType="java.util.List" ofType="NoticeFileVO">
+			<id column="FILENO" property="fileNo"/>
+			<result column="FILENAME" property="fileName"/>
+			<result column="ORINAME" property="oriName"/>
+		</collection>			
+	</resultMap>
 	
 </mapper>

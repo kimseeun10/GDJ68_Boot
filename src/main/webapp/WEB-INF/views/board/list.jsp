@@ -40,7 +40,7 @@
 	                                   <c:forEach items="${list}" var="vo">
 	                                        <tr>
 	                                            <td>${vo.boardNo}</td>
-	                                            <td><a href="/notice/detail?boardNo=${vo.boardNo}">${vo.boardTitle}</a></td>
+	                                            <td><a href="./detail?boardNo=${vo.boardNo}">${vo.boardTitle}</a></td>
 	                                            <td>${vo.boardWriter}</td>
 	                                            <td>${vo.boardDate}</td>
 	                                            <td>${vo.boardHit}</td>
@@ -52,7 +52,7 @@
 						</div>
 						<div class="row">
 							<div class="col=sm-12 col-md-5">
-							   <a href="/notice/add" class="btn btn-primary btn-icon-split">
+							   <a href="./add" class="btn btn-primary btn-icon-split">
 	                              <span class="icon text-white-50">
 	                                <i class="fas fa-flag"></i>
 	                              </span>

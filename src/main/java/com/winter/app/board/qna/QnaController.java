@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardVO;
-import com.winter.app.board.notice.NoticeVO;
 import com.winter.app.commons.Pager;
 
 import lombok.extern.slf4j.Slf4j;
