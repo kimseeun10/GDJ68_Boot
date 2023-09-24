@@ -68,14 +68,14 @@
 							        <span aria-hidden="true">&laquo;</span>
 							      </a>
 							   </c:if>
-								<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">		    
-							    	<a class="" href="./list?page=${i}&kind=${param.kind}&search=${param.search}" style="margin-left: 20px;">${i}</a>
-								</c:forEach>
+									<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">		    
+								    	<a class="" href="./list?page=${i}&kind=${param.kind}&search=${param.search}" style="margin-left: 20px;">${i}</a>
+									</c:forEach>
 								<c:if test="${pager.next}">
-							  	   	<a class="" href="./list?page=${pager.lastNum+1}&kind=${param.kind}&search=${param.search}" aria-label="Next">
-							    	<span aria-hidden="true">&nbsp;&raquo;</span>
-							      	</a>
-							   </c:if>
+								  	   	<a class="" href="./list?page=${pager.lastNum+1}&kind=${param.kind}&search=${param.search}" aria-label="Next">
+								    	<span aria-hidden="true">&nbsp;&raquo;</span>
+								      	</a>
+								   </c:if>
 						   </ul>
 						</div> 
 						</div>

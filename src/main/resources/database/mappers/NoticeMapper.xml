@@ -20,7 +20,7 @@
 		LIKE #{pattern}
 	</select>
 
-	<select id="getList" parameterType="Pager" resultType="NoticeVO">
+	<select id="getList" parameterType="Pager" resultMap="getDetailResult">
 		SELECT * FROM NOTICE
 		WHERE 
 			<include refid="forPager"></include> 

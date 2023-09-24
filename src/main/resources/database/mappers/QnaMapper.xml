@@ -4,6 +4,22 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.winter.app.board.qna.QnaDAO">
+	
+	<sql id="forPager">
+		<choose>
+			<when test="kind=='1'">BOARDTITLE</when>
+			<when test="kind=='2'">BOARDCONTENTS</when>
+			<otherwise>BOARDWRITER</otherwise> <!-- 아무것도 안하면 writer에서 검색됨 -->
+		</choose>		
+	</sql>
+
+	<select id="getCount" parameterType="Pager" resultType="Long">
+		<bind name="pattern" value="'%'+_parameter.getSearch()+'%'"/> <!-- mybatis 이용한 쿼리 -->
+		SELECT COUNT(BOARDNO) FROM QNA
+		WHERE <include refid="forPager"></include>
+		LIKE #{pattern}
+	</select>
+	
 	<select id="getList" parameterType="Pager" resultType="QnaVO">
 		SELECT * FROM QNA ORDER BY BOARDNO DESC
 	</select>
@@ -46,5 +62,19 @@
 			<result column="ORINAME" property="oriName"/>
 		</collection>			
 	</resultMap>
-	
+
+	<update id="setUpdate" parameterType="BoardVO"> 
+		UPDATE QNA SET 
+		BOARDTITLE = #{boardTitle},
+		BOARDWRITER = #{boardWriter},
+		BOARDCONTENTS = #{boardContents},
+		BOARDDATE = NOW()
+		WHERE BOARDNO=#{boardNo}
+	</update>
+
+	<delete id="setDelete" parameterType="BoardVO">
+		DELETE FROM QNA 
+		WHERE BOARDNO=#{boardNo}
+	</delete>
+
 </mapper>

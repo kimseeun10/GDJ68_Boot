@@ -74,19 +74,19 @@ public class QnaService implements BoardService{
 	@Override
 	public int setUpdate(BoardVO boardVO) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return qnaDAO.setUpdate(boardVO);
 	}
 
 	@Override
 	public int setHitUpdate(BoardVO boardVO) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return qnaDAO.setHitUpdate(boardVO);
 	}
 
 	@Override
 	public int setDelete(BoardVO boardVO) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return qnaDAO.setDelete(boardVO);
 	}
 
 	

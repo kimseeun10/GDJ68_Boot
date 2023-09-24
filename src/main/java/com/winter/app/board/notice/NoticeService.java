@@ -97,7 +97,7 @@ public class NoticeService implements BoardService{
 	@Override
 	public int setHitUpdate(BoardVO boardVO) throws Exception {
 		// TODO Auto-generated method stub
-		return noticeDAO.setUpdate(boardVO);
+		return noticeDAO.setHitUpdate(boardVO);
 	}
 
 	

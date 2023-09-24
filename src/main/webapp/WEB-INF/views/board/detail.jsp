@@ -44,15 +44,17 @@
 			<label for="boardContents" class="form-label"></label>
 			<textarea class="form-control" name="boardContents" id="boardContents" readonly="readonly" style="height: 200px;">${vo.boardContents}</textarea>
 		 </div>
+	</div>
+		 <div>
 			<c:forEach items="${vo.list}" var="f">
 			 	<img alt="" src="../files/${board}/${f.fileName}" style="width: 300px; height: 300px;"><!-- files 까지가 upload라는 폴더까지 -->
-				<br>
 				<a href="./fileDown?fileNo=${f.fileNo}">${f.oriName}</a>
 			</c:forEach>
-	</div>
+		 </div>
 	<br><br>
         		<a class="btn btn-outline-secondary" href="./update?boardNo=${vo.boardNo}">수정</a>
 				<a class="btn btn-danger" href="./delete?boardNo=${vo.boardNo}">삭제</a>    		
+
 			</div>
         		</div>
 				<c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
