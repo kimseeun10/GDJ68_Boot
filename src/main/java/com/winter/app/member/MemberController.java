@@ -32,7 +32,7 @@ public class MemberController {
 	@GetMapping("update")
 	public void setUpdate(HttpSession session, Model model)throws Exception{
 		MemberVO memberVO = (MemberVO)session.getAttribute("member");
-		memberVO = memberService.getLogin(memberVO); //비번까지 같이 검사됨
+//		memberVO = memberService.getLogin(memberVO); //비번까지 같이 검사됨
 		
 		MemberInfoVO memberInfoVO = new MemberInfoVO();
 		memberInfoVO.setName(memberVO.getName());
@@ -60,18 +60,18 @@ public class MemberController {
 		
 	}
 	
-	@PostMapping("login")
-	public String getLogin2(MemberVO memberVO, HttpSession session)throws Exception{
-		memberVO = memberService.getLogin(memberVO);
-		
-		if(memberVO != null) {
-			session.setAttribute("member", memberVO);
-			return "redirect:../";
-		}
-		
-		return "./login";
-		
-	}
+//	@PostMapping("login")
+//	public String getLogin2(MemberVO memberVO, HttpSession session)throws Exception{
+//		memberVO = memberService.getLogin(memberVO);
+//		
+//		if(memberVO != null) {
+//			session.setAttribute("member", memberVO);
+//			return "redirect:../";
+//		}
+//		
+//		return "./login";
+//		
+//	}
 	
 	
 //	@GetMapping("join")
@@ -79,6 +79,7 @@ public class MemberController {
 //		MemberVO memberVO = new MemberVO();
 //		model.addAttribute("memberVO", memberVO);
 //	}
+	
 // 위,아래 동일한 코드
 	
 	@GetMapping("join")
@@ -95,7 +96,7 @@ public class MemberController {
 		}
 		
 		//회원가입 진행
-		
+		int result = memberService.setJoin(memberVO);
 		
 		log.info("photo : {} --- size :{}", photo.getOriginalFilename(), photo.getSize());
 		return "redirect:../";

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,6 +52,7 @@
 							</table>
 						</div>
 						<div class="row">
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<div class="col=sm-12 col-md-5">
 							   <a href="./add" class="btn btn-primary btn-icon-split">
 	                              <span class="icon text-white-50">
@@ -59,6 +61,8 @@
 	                              <span class="text">글 추가</span>
 	                            </a>
 							</div>
+
+					</sec:authorize>
 						<div class="col=sm-12 col-md-7" style="fl">
 						<div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
 						<!-- 페이지 -->
