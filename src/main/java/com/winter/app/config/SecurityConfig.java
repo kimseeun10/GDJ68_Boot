@@ -1,5 +1,6 @@
 package com.winter.app.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +13,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+	
+	@Autowired
+	private SecuritySuccessHandler handler;
+	
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		
@@ -47,7 +51,9 @@ public class SecurityConfig {
 			.formLogin()
 				.loginPage("/member/login") //실제 로그인을 처리하는 주소를 의미
 				.defaultSuccessUrl("/")
-				.failureUrl("/member/login")
+				//.successHandler(handler)
+				//.failureUrl("/member/login?message=LoginFail")
+				.failureHandler(getFailHandler())
 				.permitAll() //위 경로로 가는 것을 누구나 허용하겠다는 뜻
 				.and()
 			.logout()
@@ -58,6 +64,11 @@ public class SecurityConfig {
 			.sessionManagement()
 			;
 		return httpSecurity.build();
+	}
+	
+	
+	SecurityFailHandler getFailHandler() {
+		return new SecurityFailHandler();
 	}
 	
 }
