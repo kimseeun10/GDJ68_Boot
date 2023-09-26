@@ -26,18 +26,22 @@ public class SecurityFailHandler implements AuthenticationFailureHandler{
 		
 		log.info("========Exception : {}=========", exception);
 		String message = "로그인 실패";
-		if(exception instanceof InternalAuthenticationServiceException) {
-			message = "존재하지 않는 아이디입니다.";
-		}
-		if(exception instanceof BadCredentialsException) {
-			message = "비밀번호를 확인해주세요";
-		}
+		
 		if(exception instanceof AuthenticationException) {
 			message = "휴먼 계정";
+		}
+		if(exception instanceof InternalAuthenticationServiceException) {
+			//message = "존재하지 않는 아이디입니다.";
+			message="login.fail.nouser";
+		}
+		if(exception instanceof BadCredentialsException) {
+			//message = "비밀번호를 확인해주세요";
+			message="login.fail.notpassword";
 		}
 		if(exception instanceof LockedException) {
 			message = "잠긴 계정입니다. 관리자에게 문의해주세요.";
 		}
+		
 		message = URLEncoder.encode(message, "UTF-8");
 		response.sendRedirect("/member/login?message="+message);
 		

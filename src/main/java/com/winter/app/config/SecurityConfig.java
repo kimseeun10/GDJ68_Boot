@@ -58,16 +58,26 @@ public class SecurityConfig {
 				.and()
 			.logout()
 				.logoutUrl("/member/logout")
-				.logoutSuccessUrl("/")
+				//.logoutSuccessUrl("/")
+				.addLogoutHandler(getLogoutAdd())
+				.logoutSuccessHandler(getLogoutHandler())
 				.invalidateHttpSession(true)
+				.deleteCookies("JESSIONID")
 				.and()
 			.sessionManagement()
 			;
 		return httpSecurity.build();
 	}
 	
+	private SecurityLogoutHandler getLogoutHandler() {
+		return new SecurityLogoutHandler();
+	}
 	
-	SecurityFailHandler getFailHandler() {
+	private SecurityLogoutAdd getLogoutAdd() {
+		return new SecurityLogoutAdd();
+	}
+	
+	private SecurityFailHandler getFailHandler() {
 		return new SecurityFailHandler();
 	}
 	

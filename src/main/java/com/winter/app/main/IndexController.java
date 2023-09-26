@@ -32,7 +32,7 @@ public class IndexController {
 		
 		Authentication a = context.getAuthentication();
 		
-		log.info("===========GetName : {}============", a.getName());
+		log.info("===========GetName : {}============", a.getName()); // user의 아이디
 		
 		log.info("===========Principal : {}============", a.getPrincipal());
 		
