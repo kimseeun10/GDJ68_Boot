@@ -1,5 +1,6 @@
 package com.winter.app.member;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -7,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -34,14 +36,13 @@ public class MemberController {
 	
 	@GetMapping("info")
 	public void getInfo(HttpSession session)throws Exception{
-		SecurityContext context = SecurityContextHolder.getContext();
+		//1. DB에서 사용자 정보를 조회해서 JSP로 보내는 방법
 		
-		Authentication a = context.getAuthentication();
 	}
 	
 	@GetMapping("update")
-	public void setUpdate(HttpSession session, Model model)throws Exception{
-		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+	public void setUpdate(@AuthenticationPrincipal MemberVO memberVO, Model model)throws Exception{
+//		MemberVO memberVO = (MemberVO)principal;
 //		memberVO = memberService.getLogin(memberVO); //비번까지 같이 검사됨
 		
 		MemberInfoVO memberInfoVO = new MemberInfoVO();
@@ -53,8 +54,12 @@ public class MemberController {
 	}
 
 	@PostMapping("update")
-	public void setUpdate(@Valid MemberInfoVO memberInfoVO, BindingResult bindingResult)throws Exception{
+	public String setUpdate(@Valid MemberInfoVO memberInfoVO, BindingResult bindingResult)throws Exception{
+		Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		MemberVO memberVO = (MemberVO)obj;
+		memberVO.setEmail("UpdateEmail@naver.com");
 		
+		return "redirect:/";
 	}
 	
 	

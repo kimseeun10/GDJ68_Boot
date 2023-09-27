@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.winter.app.member.MemberService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -17,11 +19,8 @@ public class SecurityConfig {
 	@Autowired
 	private SecuritySuccessHandler handler;
 	
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		
-		return new BCryptPasswordEncoder(); //암호화 시켜주는 클래스 (객체필요 - Bean 사용)
-	}
+	@Autowired
+	private MemberService memberService;
 	
 	@Bean
 	WebSecurityCustomizer webSecurityCustomizer() {
@@ -40,8 +39,8 @@ public class SecurityConfig {
 		httpSecurity
 			.cors()
 			.and()
-			.csrf()
-			.disable()
+//			.csrf()
+//			.disable()
 			.authorizeHttpRequests()
 				.antMatchers("/notice/add").hasRole("ADMIN")//ROLE_ADMIN에서 ROLE_를 제외
 				.antMatchers("/manager/*").hasAnyRole("ADMIN","MANAGER") //ADMIN, MANAGER 둘중 하나만 가지고 있으면 통과
@@ -64,6 +63,13 @@ public class SecurityConfig {
 				.invalidateHttpSession(true)
 				.deleteCookies("JESSIONID")
 				.and()
+			.rememberMe()
+				.tokenValiditySeconds(60)
+				.key("rememberKey")
+				.userDetailsService(memberService)
+				.authenticationSuccessHandler(handler)
+				.and()
+				
 			.sessionManagement()
 			;
 		return httpSecurity.build();
