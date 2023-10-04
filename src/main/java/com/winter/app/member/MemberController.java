@@ -62,13 +62,18 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	
-	@GetMapping("logout")
-	public String getLogout(HttpSession session)throws Exception{
-		session.invalidate(); //일정시간 지나면 로그아웃
-		
+	@GetMapping("kakaoLogout")
+	public String kakaoLogout() {
+		log.info("**********카카오 로그아웃************");
 		return "redirect:../";
 	}
+	
+//	@GetMapping("logout")
+//	public String getLogout(HttpSession session)throws Exception{
+//		session.invalidate(); //일정시간 지나면 로그아웃
+//		
+//		return "redirect:../";
+//	}
 	
 //	@GetMapping("login")
 //	public void getLogin(@ModelAttribute MemberVO memberVO)throws Exception{

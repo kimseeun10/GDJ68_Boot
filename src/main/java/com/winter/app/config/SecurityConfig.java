@@ -39,8 +39,8 @@ public class SecurityConfig {
 		httpSecurity
 			.cors()
 			.and()
-//			.csrf()
-//			.disable()
+			.csrf()
+			.disable()
 			.authorizeHttpRequests()
 				.antMatchers("/notice/add").hasRole("ADMIN")//ROLE_ADMIN에서 ROLE_를 제외
 				.antMatchers("/manager/*").hasAnyRole("ADMIN","MANAGER") //ADMIN, MANAGER 둘중 하나만 가지고 있으면 통과
@@ -59,7 +59,7 @@ public class SecurityConfig {
 				.logoutUrl("/member/logout")
 				//.logoutSuccessUrl("/")
 				.addLogoutHandler(getLogoutAdd())
-				.logoutSuccessHandler(getLogoutHandler())
+				//.logoutSuccessHandler(getLogoutHandler())
 				.invalidateHttpSession(true)
 				.deleteCookies("JESSIONID")
 				.and()
